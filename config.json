@@ -1,0 +1,48 @@
+{
+  "log": {
+    "loglevel": "warning",
+    "error":"/var/log/v2ray/error.log",
+    "access":"/var/log/v2ray/access.log"
+  },
+
+  "inbounds": [{
+    "port": 1080,
+    "protocol": "vmess",
+    "settings": {
+      "clients": [{
+          "id": "uuid",
+          "level": 1,
+          "alterId": 64
+        }]
+    },
+    "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+            "path": "/path"
+        }
+    }
+  }],
+  "outbounds": [{
+    "protocol": "freedom",
+    "settings": {}
+  },{
+    "protocol": "blackhole",
+    "settings": {},
+    "tag": "blocked"
+  }],
+  "dns": {
+    "servers": [
+       "https+local://1.1.1.1/dns-query",
+       "localhost"
+   ]
+  },
+  "routing": {
+    "rules": [
+      {
+        "type": "field",
+        "ip": ["geoip:private"],
+        "outboundTag": "blocked"
+      }
+    ]
+  }
+}
